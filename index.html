@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Recognition</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <main class="contenedor">
+        <header class="encabezado">
+            <div class="brand-wrap">
+                <div class="brand-mark" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 14a3 3 0 0 0 3-3V6a3 3 0 1 0-6 0v5a3 3 0 0 0 3 3zm5-3a1 1 0 0 1 2 0A7 7 0 0 1 13 18.93V22h-2v-3.07A7 7 0 0 1 5 11a1 1 0 0 1 2 0 5 5 0 0 0 10 0zm-5 2.5a1.5 1.5 0 0 1-1.5-1.5V6a1.5 1.5 0 0 1 3 0v7.5a1.5 1.5 0 0 1-1.5 1.5z"/>
+                    </svg>
+                </div>
+                <div class="brand-copy">
+                    <span class="eyebrow">IA Voice Studio</span>
+                    <h1>VOICE RECOGNITION</h1>
+                </div>
+            </div>
+            <div class="header-pill">
+                <span class="pill-dot"></span>
+                En línea
+            </div>
+        </header>
+
+        <section class="hero-section">
+            <div class="hero-content">
+                <span class="hero-badge">Reconocimiento inteligente</span>
+                <h2>Transforma tu voz en texto en tiempo real</h2>
+                <p>Un asistente con voz pensado para interpretar comandos, responder y facilitar cada interacción.</p>
+            </div>
+        </section>
+
+        <section class="tarjeta tarjeta-principal">
+            <div class="visualizer-shell" aria-hidden="true">
+                <div class="audio-visualizer">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+
+            <div class="estado-wrap">
+                <div class="estado" id="estado" data-estado="inactivo">
+                    <span class="punto"></span>
+                    <span id="textoEstado">Inactivo</span>
+                </div>
+            </div>
+
+            <button id="btnMicrofono" class="boton-microfono" type="button"
+                    aria-label="Iniciar o detener el reconocimiento de voz" aria-pressed="false">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/>
+                </svg>
+            </button>
+
+            <div class="status-stack">
+                <p id="mensaje" class="mensaje" role="status" aria-live="polite" hidden></p>
+                <p id="avisoContexto" class="mensaje error" hidden></p>
+            </div>
+        </section>
+
+        <section class="metrics-panel">
+            <div class="section-label-row">
+                <span class="mini-label">Panel de información</span>
+            </div>
+            <div class="metric-grid">
+                <article class="tarjeta metric-card">
+                    <span class="metric-label">Estado actual</span>
+                    <strong id="metricEstado">Inactivo</strong>
+                </article>
+                <article class="tarjeta metric-card">
+                    <span class="metric-label">Idioma detectado</span>
+                    <strong>es-CO</strong>
+                </article>
+                <article class="tarjeta metric-card">
+                    <span class="metric-label">Acceso</span>
+                    <strong>Micrófono</strong>
+                </article>
+            </div>
+        </section>
+
+        <section class="resultados">
+            <article class="tarjeta resultado-card">
+                <div class="resultado-header">
+                    <h2>Lo que dijiste</h2>
+                    <span class="chip chip-primary">Audio</span>
+                </div>
+                <p id="transcripcion" class="contenido-resultado">&mdash;</p>
+            </article>
+            <article class="tarjeta resultado-card">
+                <div class="resultado-header">
+                    <h2>Comando identificado</h2>
+                    <span class="chip chip-success">IA</span>
+                </div>
+                <p id="comandoIdentificado" class="contenido-resultado">&mdash;</p>
+            </article>
+            <article class="tarjeta resultado-card">
+                <div class="resultado-header">
+                    <h2>Respuesta</h2>
+                    <span class="chip chip-warning">Output</span>
+                </div>
+                <p id="respuesta" class="contenido-resultado">&mdash;</p>
+            </article>
+        </section>
+
+        <div class="action-row" aria-label="Acciones del resultado">
+            <button class="action-button secondary" type="button">Copiar</button>
+            <button class="action-button secondary" type="button">Limpiar</button>
+            <button class="action-button secondary" type="button">Descargar</button>
+            <button class="action-button secondary" type="button">Compartir</button>
+        </div>
+
+        <section class="grid-inferior">
+            <article class="tarjeta">
+                <div class="resultado-header">
+                    <h2>Comandos disponibles</h2>
+                    <span class="chip chip-neutral">Lista</span>
+                </div>
+                <ul id="listaComandos" class="lista lista-scroll"></ul>
+            </article>
+            <article class="tarjeta">
+                <div class="resultado-header">
+                    <h2>Historial (últimos 5)</h2>
+                    <span class="chip chip-neutral">Reciente</span>
+                </div>
+                <ol id="listaHistorial" class="lista"></ol>
+            </article>
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
